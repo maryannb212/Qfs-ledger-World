@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account - Qfs ledger World</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="login-page">
+
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <a href="index.html" class="login-logo">
+          <svg viewBox="0 0 32 32" width="32" height="32">
+            <circle cx="16" cy="16" r="14" fill="#3DD598" stroke="#1a1a2e" stroke-width="2" />
+            <text x="16" y="21" text-anchor="middle" font-size="14" font-weight="700" fill="#1a1a2e">Q</text>
+          </svg>
+        </a>
+        <h1 class="login-title">Create Account</h1>
+      </div>
+      
+      <form class="login-form" id="registerForm" action="#" method="POST">
+        <div id="form-message" style="margin-bottom: 15px; font-size: 0.9rem; text-align: center;"></div>
+        
+        <div class="form-group" style="display: flex; gap: 10px;">
+          <input type="text" class="form-control" id="firstname" placeholder="First Name" required>
+          <input type="text" class="form-control" id="lastname" placeholder="Last Name" required>
+        </div>
+
+        <div class="form-group">
+          <input type="text" class="form-control" id="username" placeholder="Choose a Username" required>
+        </div>
+
+        <div class="form-group">
+          <input type="email" class="form-control" id="email" placeholder="Email Address" required>
+        </div>
+        
+        <div class="form-group">
+          <input type="password" class="form-control" id="password" placeholder="Create Password" required>
+        </div>
+
+        <div class="form-group">
+          <input type="password" class="form-control" id="confirm-password" placeholder="Confirm Password" required>
+        </div>
+        
+        <button type="submit" class="btn btn--primary btn--full" id="registerBtn" style="margin-top: 10px;">Register</button>
+      </form>
+      
+      <div class="login-footer">
+        <p>Already have an account? <a href="login.html">Login here</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const firstname = document.getElementById('firstname').value;
+      const lastname = document.getElementById('lastname').value;
+      const username = document.getElementById('username').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirm-password').value;
+      const msgDiv = document.getElementById('form-message');
+      const btn = document.getElementById('registerBtn');
+      
+      if (password !== confirmPassword) {
+        msgDiv.style.color = '#ef4444';
+        msgDiv.textContent = 'Passwords do not match.';
+        return;
+      }
+
+      try {
+        btn.disabled = true;
+        btn.textContent = 'Registering...';
+        
+        const response = await fetch('/api/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ firstname, lastname, username, email, password })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+          msgDiv.style.color = '#22c55e';
+          msgDiv.textContent = 'Registration successful! Redirecting...';
+          setTimeout(() => {
+            window.location.href = 'login.html';
+          }, 1500);
+        } else {
+          msgDiv.style.color = '#ef4444';
+          msgDiv.textContent = data.error || 'Registration failed';
+          btn.disabled = false;
+          btn.textContent = 'Register';
+        }
+      } catch (err) {
+        msgDiv.style.color = '#ef4444';
+        msgDiv.textContent = 'Server connection error. Is the backend running?';
+        btn.disabled = false;
+        btn.textContent = 'Register';
+      }
+    });
+  </script>
+</body>
+</html>

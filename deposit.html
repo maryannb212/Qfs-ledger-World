@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deposit - Qfs ledger World</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #3DD598;
+      --secondary: #1a1a2e;
+      --bg: #f8f9fa;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding-bottom: 80px;
+    }
+    header {
+      width: 100%;
+      background: white;
+      padding: 15px 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      color: var(--secondary);
+      text-decoration: none;
+    }
+    .container {
+      max-width: 600px;
+      width: 90%;
+      text-align: center;
+    }
+    h1 { font-size: 1.8rem; color: var(--secondary); margin-bottom: 10px; }
+    p.subtitle { color: #666; margin-bottom: 30px; font-size: 0.9rem; }
+
+    .deposit-card {
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    .asset-selector {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+      justify-content: center;
+    }
+    .asset-btn {
+      padding: 10px 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: white;
+      cursor: pointer;
+      font-weight: 600;
+      color: #666;
+      transition: all 0.2s;
+    }
+    .asset-btn.active {
+      background: var(--secondary);
+      color: white;
+      border-color: var(--secondary);
+    }
+
+    .address-box {
+      background: #f8fafc;
+      border: 1px solid #edf2f7;
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 10px;
+      position: relative;
+    }
+    .address-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #94a3b8;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .address-text {
+      font-family: monospace;
+      font-size: 0.95rem;
+      color: var(--secondary);
+      word-break: break-all;
+      display: block;
+      margin-bottom: 15px;
+    }
+    .copy-btn {
+      background: var(--primary);
+      color: var(--secondary);
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      width: 100%;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .qr-placeholder {
+      width: 150px;
+      height: 150px;
+      background: #eee;
+      margin: 20px auto;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #999;
+      font-size: 0.8rem;
+    }
+
+    .instruction-list {
+      padding: 0;
+      list-style: none;
+      font-size: 0.85rem;
+      color: #666;
+      line-height: 1.6;
+    }
+    .instruction-list li {
+      margin-bottom: 10px;
+      display: flex;
+      gap: 10px;
+    }
+    .instruction-list i { color: var(--primary); margin-top: 3px; }
+
+    /* Mobile Nav override */
+    .mobile-nav {
+      position: fixed; bottom: 0; left: 0; width: 100%; background: white;
+      display: flex; justify-content: space-around; padding: 10px 0;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.05); z-index: 1000;
+    }
+    .nav-item { text-decoration: none; color: #666; font-size: 0.65rem; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .nav-item i { font-size: 1.2rem; }
+    .nav-item.active { color: var(--primary); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="dashboard.html" class="logo">
+      <svg viewBox="0 0 32 32" width="28" height="28">
+        <circle cx="16" cy="16" r="14" fill="#3DD598" stroke="#1a1a2e" stroke-width="2" />
+        <text x="16" y="21" text-anchor="middle" font-size="14" font-weight="700" fill="#1a1a2e">Q</text>
+      </svg>
+      <span>Qfs ledger World</span>
+    </a>
+  </header>
+
+  <div class="container">
+    <h1>Deposit Funds</h1>
+    <p class="subtitle">Select your preferred asset to view the deposit address.</p>
+
+    <div class="asset-selector">
+      <button class="asset-btn active" onclick="selectAsset('BTC')">BTC</button>
+      <button class="asset-btn" onclick="selectAsset('ETH')">ETH</button>
+      <button class="asset-btn" onclick="selectAsset('USDT')">USDT</button>
+    </div>
+
+    <div class="deposit-card">
+      <div id="deposit-content">
+        <span class="address-label" id="asset-label">Bitcoin (BTC) Address</span>
+        <div class="address-box">
+          <span class="address-text" id="wallet-address">Loading...</span>
+          <button class="copy-btn" onclick="copyAddress()">
+            <i class="fa-regular fa-copy"></i> COPY ADDRESS
+          </button>
+        </div>
+        
+        <div class="qr-placeholder">
+          <i class="fa-solid fa-qrcode fa-4x"></i>
+        </div>
+        <p style="text-align:center; font-size: 0.75rem; color: #999;">Scan QR code to deposit</p>
+      </div>
+    </div>
+
+    <div class="deposit-card">
+      <h3 style="margin-top:0; font-size: 1rem;">Important Instructions</h3>
+      <ul class="instruction-list">
+        <li><i class="fa-solid fa-circle-check"></i> Send only the selected asset to this address. Sending any other coin may result in permanent loss.</li>
+        <li><i class="fa-solid fa-circle-check"></i> Deposits are credited automatically after 3 network confirmations.</li>
+        <li><i class="fa-solid fa-circle-check"></i> Minimum deposit amount is $10 equivalent.</li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="mobile-nav">
+    <a href="dashboard.html" class="nav-item">
+      <i class="fa-solid fa-border-all"></i>
+      <span>Home</span>
+    </a>
+    <a href="deposit.html" class="nav-item active">
+      <i class="fa-solid fa-arrow-down"></i>
+      <span>Deposit</span>
+    </a>
+    <a href="#" class="nav-item">
+      <i class="fa-solid fa-arrow-up"></i>
+      <span>Withdraw</span>
+    </a>
+    <a href="backup-wallet.html" class="nav-item">
+      <i class="fa-solid fa-wallet"></i>
+      <span>Backup Wallet</span>
+    </a>
+    <a href="profile.html" class="nav-item">
+      <i class="fa-solid fa-gear"></i>
+      <span>Settings</span>
+    </a>
+  </nav>
+
+  <script>
+    let currentAsset = 'BTC';
+    let addresses = {};
+
+    async function loadAddresses() {
+      try {
+        const res = await fetch('/api/settings');
+        const data = await res.json();
+        addresses = data.deposit_addresses;
+        updateUI();
+      } catch (err) {
+        document.getElementById('wallet-address').textContent = 'Error loading address';
+      }
+    }
+
+    function selectAsset(asset) {
+      currentAsset = asset;
+      
+      // Update buttons
+      document.querySelectorAll('.asset-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.textContent === asset) btn.classList.add('active');
+      });
+
+      // Update labels
+      const labels = {
+        'BTC': 'Bitcoin (BTC) Address',
+        'ETH': 'Ethereum (ETH) Address',
+        'USDT': 'Tether (USDT TRC20) Address'
+      };
+      document.getElementById('asset-label').textContent = labels[asset];
+      
+      updateUI();
+    }
+
+    function updateUI() {
+      document.getElementById('wallet-address').textContent = addresses[currentAsset] || 'No address set';
+    }
+
+    function copyAddress() {
+      const text = document.getElementById('wallet-address').textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.querySelector('.copy-btn');
+        const original = btn.innerHTML;
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> COPIED!';
+        btn.style.background = '#1a1a2e';
+        btn.style.color = '#3DD598';
+        setTimeout(() => {
+          btn.innerHTML = original;
+          btn.style.background = '';
+          btn.style.color = '';
+        }, 2000);
+      });
+    }
+
+    loadAddresses();
+  </script>
+</body>
+</html>

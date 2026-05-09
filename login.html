@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Qfs ledger World</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="login-page">
+
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <a href="index.html" class="login-logo">
+          <svg viewBox="0 0 32 32" width="32" height="32">
+            <circle cx="16" cy="16" r="14" fill="#3DD598" stroke="#1a1a2e" stroke-width="2" />
+            <text x="16" y="21" text-anchor="middle" font-size="14" font-weight="700" fill="#1a1a2e">Q</text>
+          </svg>
+        </a>
+        <h1 class="login-title">Login Account</h1>
+      </div>
+      
+      <form class="login-form" id="loginForm" action="#" method="POST">
+        <div id="form-message" style="margin-bottom: 15px; font-size: 0.9rem; text-align: center;"></div>
+        
+        <div class="form-group">
+          <input type="text" class="form-control" id="username" placeholder="Enter your Username" required>
+        </div>
+        
+        <div class="form-group">
+          <input type="password" class="form-control" id="password" placeholder="Enter your Password" required>
+        </div>
+        
+        <div class="form-actions">
+          <a href="forgot-password.html" class="forgot-password">Forgot password?</a>
+        </div>
+        
+        <button type="submit" class="btn btn--primary btn--full" id="loginBtn">Login</button>
+      </form>
+      
+      <div class="login-footer">
+        <p>Need a account? <a href="register.html">Create an account</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const msgDiv = document.getElementById('form-message');
+      const btn = document.getElementById('loginBtn');
+
+      try {
+        btn.disabled = true;
+        btn.textContent = 'Logging in...';
+        
+        const response = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+          msgDiv.style.color = '#22c55e';
+          msgDiv.textContent = 'Login successful! Redirecting...';
+          
+          // Store token and user data
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('user', JSON.stringify(data.user));
+          
+          setTimeout(() => {
+            window.location.href = 'dashboard.html';
+          }, 1000);
+        } else {
+          msgDiv.style.color = '#ef4444';
+          msgDiv.textContent = data.error || 'Login failed';
+          btn.disabled = false;
+          btn.textContent = 'Login';
+        }
+      } catch (err) {
+        msgDiv.style.color = '#ef4444';
+        msgDiv.textContent = 'Server connection error. Is the backend running?';
+        btn.disabled = false;
+        btn.textContent = 'Login';
+      }
+    });
+  </script>
+</body>
+</html>

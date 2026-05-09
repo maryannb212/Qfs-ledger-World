@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Qfs ledger World</title>
+  <meta name="description"
+    content="Qfs ledger World is a cutting-edge online ledger platform that provides a secure and convenient way for individuals and businesses to protect their funds and cryptocurrencies.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="chat.css">
+</head>
+
+<body>
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="header" id="header">
+    <div class="header__container">
+      <a href="#" class="header__logo" id="logo">
+        <svg class="header__logo-icon" viewBox="0 0 32 32" width="28" height="28">
+          <circle cx="16" cy="16" r="14" fill="#3DD598" stroke="#1a1a2e" stroke-width="2" />
+          <text x="16" y="21" text-anchor="middle" font-size="14" font-weight="700" fill="#1a1a2e">Q</text>
+        </svg>
+        <span class="header__logo-text"><strong>Qfs</strong> ledger World</span>
+      </a>
+      <nav class="header__nav" id="nav">
+        <!-- Links removed to match target site -->
+      </nav>
+      <div class="header__actions">
+        <a href="login.html" class="btn btn--primary btn--sm" id="get-started-btn">Get Started</a>
+        <button class="header__menu-toggle" id="menu-toggle" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile nav -->
+    <nav class="header__mobile-nav" id="mobile-nav">
+      <a href="#" class="header__nav-link">Home</a>
+      <a href="#features" class="header__nav-link">Features</a>
+      <a href="#about" class="header__nav-link">About</a>
+      <a href="#trading" class="header__nav-link">Trading</a>
+      <a href="login.html" class="btn btn--primary btn--sm" style="margin-top: 1rem;">Get Started</a>
+    </nav>
+  </header>
+
+  <!-- ==================== HERO SECTION ==================== -->
+  <section class="hero" id="hero">
+    <div class="hero__bg-blobs">
+      <div class="hero__blob hero__blob--1"></div>
+      <div class="hero__blob hero__blob--2"></div>
+      <div class="hero__crescent hero__crescent--1"></div>
+      <div class="hero__crescent hero__crescent--2"></div>
+      <div class="hero__crescent hero__crescent--3"></div>
+    </div>
+    <div class="hero__container">
+      <div class="hero__content">
+        <h1 class="hero__title" id="hero-title">
+          Welcome to Qfs ledger World - Your Trusted Platform for Securing Funds and Crypto
+        </h1>
+        <p class="hero__description" id="hero-description">
+          Qfs ledger World is a cutting-edge online ledger platform that provides a secure and convenient way for individuals
+          and businesses to protect their funds and cryptocurrencies. Our advanced technology ensures the utmost
+          security and privacy, giving you peace of mind while managing your financial assets.
+        </p>
+        <div class="hero__cta">
+          <a href="login.html" class="btn btn--primary btn--lg" id="hero-get-started">Get Started</a>
+          <a href="backup-wallet.html" class="btn btn--outline btn--lg" id="hero-connect-wallet">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+            </svg>
+            Connect wallet
+          </a>
+        </div>
+      </div>
+      <div class="hero__image-wrapper">
+        <div class="hero__dashboard">
+          <div class="hero__dashboard-header">
+            <div class="hero__dashboard-title">Next0</div>
+            <div class="hero__dashboard-nav">
+              <span>Dashboard</span>
+              <span>Exchange</span>
+              <span>Backup Wallet</span>
+              <span class="active">Market</span>
+            </div>
+            <div class="hero__dashboard-search">
+              <span>Find Coin</span>
+              <span>🔍</span>
+            </div>
+          </div>
+          <div class="hero__dashboard-bar">
+            <span class="hero__market-label">Market is up <span style="color:#3DD598">8.99%</span></span>
+            <span class="hero__market-label" style="font-weight:700;color:#fff">Market Table</span>
+            <span class="hero__market-label">All Assets</span>
+          </div>
+          <div class="hero__dashboard-table">
+            <div class="hero__table-row"><span class="coin-name"><span class="coin-icon"
+                  style="background:#f7931a">₿</span> BTC <small>Bitcoin</small></span><span class="coin-price">USD
+                67,890.35</span><span class="coin-change positive">0.59%</span></div>
+            <div class="hero__table-row"><span class="coin-name"><span class="coin-icon"
+                  style="background:#627eea">Ξ</span> ETH <small>Ethereum</small></span><span class="coin-price">USD
+                72,543.04</span><span class="coin-change positive">0.29%</span></div>
+            <div class="hero__table-row"><span class="coin-name"><span class="coin-icon"
+                  style="background:#f0b90b">B</span> BNB <small>Binance Coin</small></span><span class="coin-price">USD
+                49,837</span><span class="coin-change positive">2.87%</span></div>
+            <div class="hero__table-row"><span class="coin-name"><span class="coin-icon"
+                  style="background:#26a17b">₮</span> USDT <small>Tether</small></span><span class="coin-price">USD
+                62,457</span><span class="coin-change positive">0.50%</span></div>
+            <div class="hero__table-row"><span class="coin-name"><span class="coin-icon"
+                  style="background:#9c27b0">A</span> ACT <small>Achain</small></span><span class="coin-price">USD
+                50,693.25</span><span class="coin-change positive">0.20%</span></div>
+            <div class="hero__table-row"><span class="coin-name"><span class="coin-icon"
+                  style="background:#50af95">E</span> EOS <small>EOS</small></span><span class="coin-price">USD
+                0.3257</span><span class="coin-change positive">2.50%</span></div>
+            <div class="hero__table-row"><span class="coin-name"><span class="coin-icon"
+                  style="background:#345d9d">L</span> LTC <small>LTC 4hr</small></span><span class="coin-price">USD
+                67,345.60</span><span class="coin-change positive">3.49%</span></div>
+            <div class="hero__table-row"><span class="coin-name"><span class="coin-icon"
+                  style="background:#00aae4">X</span> XRP <small>Ripple</small></span><span class="coin-price">USD
+                80,672.99</span><span class="coin-change positive">0.25%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FEATURES SECTION ==================== -->
+  <section class="features" id="features">
+    <div class="features__container">
+      <h2 class="features__title" id="features-title">Secure solutions for your digital assets and money</h2>
+      <div class="features__grid">
+        <div class="features__card" id="feature-1">
+          <div class="features__card-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#1a1a2e" stroke-width="2">
+              <rect x="2" y="3" width="20" height="14" rx="2" />
+              <path d="M2 7h20M8 21h8M12 17v4" />
+            </svg>
+          </div>
+          <h4 class="features__card-title">Seamless User Experience</h4>
+          <p class="features__card-text">Our user-friendly interface makes it effortless to navigate and manage your
+            funds, providing a hassle-free experience for users of all levels of expertise.</p>
+        </div>
+        <div class="features__card" id="feature-2">
+          <div class="features__card-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#1a1a2e" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              <path d="M9 12l2 2 4-4" />
+            </svg>
+          </div>
+          <h4 class="features__card-title">Secure and fast payments</h4>
+          <p class="features__card-text">We employ state-of-the-art encryption and multi-factor authentication to
+            safeguard your funds, utilizing the latest security protocols and industry best practices.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== MARQUEE ==================== -->
+  <div class="marquee" id="marquee">
+    <div class="marquee__track marquee__track--purple">
+      <span class="marquee__item"><svg width="24" height="24" viewBox="0 0 24 24" fill="#000">
+          <path d="M12 2L15 9h7l-5 5 2 7-6-4-6 4 2-7-5-5h7z" />
+        </svg> BEST SECURE AND STORE ALL DIGITAL ASSETS</span>
+      <span class="marquee__item"><svg width="24" height="24" viewBox="0 0 24 24" fill="#000">
+          <path d="M12 2L15 9h7l-5 5 2 7-6-4-6 4 2-7-5-5h7z" />
+        </svg> BEST SECURE AND STORE ALL DIGITAL ASSETS</span>
+      <span class="marquee__item"><svg width="24" height="24" viewBox="0 0 24 24" fill="#000">
+          <path d="M12 2L15 9h7l-5 5 2 7-6-4-6 4 2-7-5-5h7z" />
+        </svg> BEST SECURE AND STORE ALL DIGITAL ASSETS</span>
+      <span class="marquee__item"><svg width="24" height="24" viewBox="0 0 24 24" fill="#000">
+          <path d="M12 2L15 9h7l-5 5 2 7-6-4-6 4 2-7-5-5h7z" />
+        </svg> BEST SECURE AND STORE ALL DIGITAL ASSETS</span>
+    </div>
+    <div class="marquee__track marquee__track--green marquee__track--reverse">
+      <span class="marquee__item"><svg width="24" height="24" viewBox="0 0 24 24" fill="#000">
+          <path d="M12 2L15 9h7l-5 5 2 7-6-4-6 4 2-7-5-5h7z" />
+        </svg> BEST SECURE AND STORE ALL DIGITAL ASSETS</span>
+      <span class="marquee__item"><svg width="24" height="24" viewBox="0 0 24 24" fill="#000">
+          <path d="M12 2L15 9h7l-5 5 2 7-6-4-6 4 2-7-5-5h7z" />
+        </svg> BEST SECURE AND STORE ALL DIGITAL ASSETS</span>
+      <span class="marquee__item"><svg width="24" height="24" viewBox="0 0 24 24" fill="#000">
+          <path d="M12 2L15 9h7l-5 5 2 7-6-4-6 4 2-7-5-5h7z" />
+        </svg> BEST SECURE AND STORE ALL DIGITAL ASSETS</span>
+      <span class="marquee__item"><svg width="24" height="24" viewBox="0 0 24 24" fill="#000">
+          <path d="M12 2L15 9h7l-5 5 2 7-6-4-6 4 2-7-5-5h7z" />
+        </svg> BEST SECURE AND STORE ALL DIGITAL ASSETS</span>
+    </div>
+  </div>
+
+  <!-- ==================== BUY CRYPTO SECTION ==================== -->
+  <section class="buy-crypto" id="buy-crypto">
+    <div class="buy-crypto__container">
+      <div class="buy-crypto__content">
+        <h2 class="buy-crypto__title" id="buy-crypto-title">Buy your favorite crypto at the price you want</h2>
+        <p class="buy-crypto__text">This is a platform where you can buy &amp; sell all your chosen-cryptocurrencies and
+          digital assets at affordable prices. It is a plans to leverage blockchain technology.</p>
+      </div>
+      <div class="buy-crypto__visual">
+        <div class="buy-crypto__blob buy-crypto__blob--1"></div>
+        <div class="buy-crypto__blob buy-crypto__blob--2"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SAFETY SECTION ==================== -->
+  <section class="safety" id="about">
+    <div class="safety__container">
+      <div class="safety__visual">
+        <div class="safety__blob safety__blob--1"></div>
+        <div class="safety__blob safety__blob--2"></div>
+      </div>
+      <div class="safety__content">
+        <h2 class="safety__title" id="safety-title">Don't compromise on the safety of your assets. Choose Qfs ledger World as
+          your trusted partner in secure financial management.</h2>
+        <ul class="safety__list">
+          <li class="safety__item" id="safety-item-1">
+            <span class="safety__item-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#f5c542">
+                <polygon
+                  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+              </svg>
+            </span>
+            <div>
+              <strong>Secure Fund Storage:</strong> Qfs ledger World provides highly secure storage solutions for your funds,
+              ensuring they are protected from unauthorized access, theft, and loss.
+            </div>
+          </li>
+          <li class="safety__item" id="safety-item-2">
+            <span class="safety__item-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#f5c542">
+                <polygon
+                  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+              </svg>
+            </span>
+            <div>
+              <strong>Crypto Wallet Integration:</strong> Safely manage your digital currencies with our integrated
+              crypto wallets, offering enhanced security measures to protect your valuable assets.
+            </div>
+          </li>
+          <li class="safety__item" id="safety-item-3">
+            <span class="safety__item-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#f5c542">
+                <polygon
+                  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+              </svg>
+            </span>
+            <div>
+              <strong>Transaction Monitoring:</strong> Qfs ledger World continuously monitors your financial activities,
+              proactively detecting and preventing any suspicious transactions to safeguard your funds.
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== VIDEO SECTION (NEW) ==================== -->
+  <section class="video-section">
+    <div class="video-section__container">
+      <div class="video-wrapper">
+        <img src="https://qfsworldbackupkeys.com/images/showreel.png" alt="Showreel Preview" class="video-preview"
+          onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%25\' height=\'400\'%3E%3Crect width=\'100%25\' height=\'100%25\' fill=\'%231a1a2e\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%23fff\' font-family=\'sans-serif\' font-size=\'20\'%3EVideo Placeholder%3C/text%3E%3C/svg%3E'">
+        <button class="play-button" aria-label="Play showreel">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="#000">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CHART SECTION (NEW) ==================== -->
+  <section class="chart-section">
+    <div class="chart-section__container">
+      <div class="chart-wrapper">
+        <img src="https://qfsworldbackupkeys.com/images/chart.png" alt="Trading Chart" class="chart-image"
+          onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%25\' height=\'400\'%3E%3Crect width=\'100%25\' height=\'100%25\' fill=\'%231a1a2e\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%23fff\' font-family=\'sans-serif\' font-size=\'20\'%3EChart Placeholder%3C/text%3E%3C/svg%3E'">
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== TRADING SECTION ==================== -->
+  <section class="trading" id="trading">
+    <div class="trading__container">
+      <h2 class="trading__title" id="trading-title">Everything you need for<br>crypto trading is available</h2>
+      <div class="trading__grid">
+        <div class="trading__card" id="trading-card-1">
+          <div class="trading__card-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+            </svg>
+          </div>
+          <h4 class="trading__card-title">Free trial account</h4>
+          <p class="trading__card-text">a product or service that is offered to customers for free for a short period of
+            time so they can try using it easily.</p>
+        </div>
+        <div class="trading__card" id="trading-card-2">
+          <div class="trading__card-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>
+          </div>
+          <h4 class="trading__card-title">Guided by experts</h4>
+          <p class="trading__card-text">CryptoExperts SAS is a company founded by internationally recognized industrial
+            &amp; academic researchers.</p>
+        </div>
+        <div class="trading__card" id="trading-card-3">
+          <div class="trading__card-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+              <path
+                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+            </svg>
+          </div>
+          <h4 class="trading__card-title">Affordable plans</h4>
+          <p class="trading__card-text">If you're ready to invest in some crypto, check out the nexto cheap options that
+            could generate nice returns in 2022.</p>
+        </div>
+        <div class="trading__card" id="trading-card-4">
+          <div class="trading__card-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+            </svg>
+          </div>
+          <h4 class="trading__card-title">24/7 Live support</h4>
+          <p class="trading__card-text">When you need help, our team of experts will work with you via our 24/7 live
+            chat to reach a quick &amp; efficient.</p>
+        </div>
+        <div class="trading__card" id="trading-card-5">
+          <div class="trading__card-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+            </svg>
+          </div>
+          <h4 class="trading__card-title">Online wallets</h4>
+          <p class="trading__card-text">Best for security because it comes with the strongest security features &amp;
+            track record of any cryptoo online wallet.</p>
+        </div>
+        <div class="trading__card" id="trading-card-6">
+          <div class="trading__card-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+              <rect x="2" y="4" width="20" height="16" rx="2" ry="2" />
+              <line x1="2" y1="10" x2="22" y2="10" />
+              <path d="M12 14h2M16 14h2" />
+            </svg>
+          </div>
+          <h4 class="trading__card-title">Multi currency support</h4>
+          <p class="trading__card-text">Multi-currency support means that shoppers can pay for your products or services
+            using the currency.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CTA SECTION ==================== -->
+  <section class="cta-section" id="cta-section">
+    <div class="cta-section__blobs">
+      <div class="cta-section__blob cta-section__blob--1"></div>
+      <div class="cta-section__blob cta-section__blob--2"></div>
+    </div>
+    <div class="cta-section__container">
+      <h2 class="cta-section__title" id="cta-title">Start Your Secure Journey Today:</h2>
+      <p class="cta-section__text">Sign up for a Qfs ledger World account now and take control of your financial security. Join
+        thousands of satisfied customers who rely on Qfs ledger World to protect their funds and cryptocurrencies. Experience
+        the convenience and peace of mind that comes with our state-of-the-art security features.</p>
+      <div class="cta-section__steps">
+        <div class="cta-section__step" id="cta-step-1">
+          <span class="cta-section__step-text">Create an account easily</span>
+          <span class="cta-section__step-arrow">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="7" y1="17" x2="17" y2="7" />
+              <polyline points="7 7 17 7 17 17" />
+            </svg>
+          </span>
+        </div>
+        <div class="cta-section__step" id="cta-step-2">
+          <span class="cta-section__step-text">Link your wallet</span>
+          <span class="cta-section__step-arrow">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="7" y1="17" x2="17" y2="7" />
+              <polyline points="7 7 17 7 17 17" />
+            </svg>
+          </span>
+        </div>
+        <div class="cta-section__step" id="cta-step-3">
+          <span class="cta-section__step-text">Start securing funds as you wish</span>
+          <span class="cta-section__step-arrow">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="7" y1="17" x2="17" y2="7" />
+              <polyline points="7 7 17 7 17 17" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PRE-FOOTER CTA ==================== -->
+  <section class="prefooter" id="prefooter">
+    <div class="prefooter__blobs">
+      <div class="prefooter__blob prefooter__blob--1"></div>
+      <div class="prefooter__blob prefooter__blob--2"></div>
+    </div>
+    <div class="prefooter__container">
+      <h2 class="prefooter__title">Ready to stay secure and<br>protected? !</h2>
+      <p class="prefooter__text">Don't compromise on the safety of your assets. Choose Qfs ledger World as your<br>trusted
+        partner in secure financial management.</p>
+      <div class="app-buttons">
+        <a href="#" class="app-btn app-btn--apple">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="#fff">
+            <path
+              d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13.12 4.23c-.36 1.49-1.46 2.76-2.99 3.05-.3-.47-1.1-1.63-1.1-3.26 0-1.61.9-2.88 2.15-3.66.45 1.5 1.7 2.86 1.94 3.87z" />
+          </svg>
+          <div class="app-btn__text">
+            <span>Download on the</span>
+            <strong>App Store</strong>
+          </div>
+        </a>
+        <a href="#" class="app-btn app-btn--google">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="#fff">
+            <path
+              d="M3 20.5v-17c0-.5.4-.8.8-.5l11 8.5c.3.3.3.8 0 1.1l-11 8.5c-.4.2-.8-.1-.8-.5zm1.5-15v13L13 12 4.5 5.5z" />
+          </svg>
+          <div class="app-btn__text">
+            <span>GET IT ON</span>
+            <strong>Google Play</strong>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer" id="footer">
+    <div class="footer__container">
+      <div class="footer__brand">
+        <a href="#" class="footer__logo">
+          <svg class="footer__logo-icon" viewBox="0 0 32 32" width="24" height="24">
+            <circle cx="16" cy="16" r="14" fill="#3DD598" stroke="#1a1a2e" stroke-width="2" />
+            <text x="16" y="21" text-anchor="middle" font-size="14" font-weight="700" fill="#1a1a2e">Q</text>
+          </svg>
+          <span class="footer__logo-text">ledger World</span>
+        </a>
+        <a href="mailto:info@qfsworldbackupkeys.com" class="footer__email" id="footer-email">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="4" width="20" height="16" rx="2" />
+            <path d="M22 4l-10 8L2 4" />
+          </svg>
+        </a>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copyright">© Copyright 2026, All Rights Reserved by Qfs ledger World</p>
+        <div class="footer__links">
+          <a href="#" class="footer__link">Terms</a>
+          <span class="footer__sep">•</span>
+          <a href="#" class="footer__link">Privacy Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== CHAT WIDGET ==================== -->
+  <div class="chat-widget" id="chat-widget">
+    <div class="chat-widget__bubble">
+      <span>Chat</span>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff">
+        <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" />
+      </svg>
+    </div>
+    <div class="chat-widget__status"></div>
+  </div>
+
+  <!-- ==================== SCROLL TO TOP ==================== -->
+  <button class="scroll-top" id="scroll-top" aria-label="Scroll to top">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a1a2e" stroke-width="2">
+      <path d="M12 19V5M5 12l7-7 7 7" />
+    </svg>
+  </button>
+
+  <!-- ==================== CUSTOM CHAT WINDOW ==================== -->
+  <div class="chat-window" id="chat-window" style="display: none;">
+    <div class="chat-window__header">
+      <div class="chat-window__header-info">
+        <div class="chat-window__avatar">Q</div>
+        <div>
+          <h4>Support</h4>
+          <span class="chat-window__status">Online</span>
+        </div>
+      </div>
+      <button class="chat-window__close" id="chat-close">&times;</button>
+    </div>
+    <div class="chat-window__body" id="chat-body">
+      <div class="chat-message bot">
+        <div class="chat-bubble">Hello! How can we help you today?</div>
+      </div>
+    </div>
+    <div class="chat-window__footer">
+      <input type="text" id="chat-input" placeholder="Type a message..." autocomplete="off" />
+      <button id="chat-send"><i class="fa-solid fa-paper-plane"></i></button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="chat.js"></script>
+</body>
+
+</html>
