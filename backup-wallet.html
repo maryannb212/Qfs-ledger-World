@@ -81,7 +81,10 @@
       width: 45px;
       height: 45px;
       object-fit: contain;
-      border-radius: 8px;
+      border-radius: 50%;
+      background: white;
+      padding: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     }
     .wallet-name {
       font-weight: 600;
@@ -227,56 +230,36 @@
 
   <script>
     const wallets = [
-      { name: 'MetaMask', icon: 'https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg' },
+      { name: 'MetaMask', icon: 'https://raw.githubusercontent.com/MetaMask/brand-resources/master/SVG/metamask-fox.svg' },
       { name: 'Trust Wallet', icon: 'https://trustwallet.com/assets/images/media/assets/trust_platform.svg' },
+      { name: 'Coinbase Wallet', icon: 'https://images.ctfassets.net/wr0fsn767i99/64ZN6m8K1qS0lXpY4K3J9z/7b1b3b1b3b1b3b1b3b1b3b1b3b1b3b1b/Coinbase_Wallet_Logo.png' },
       { name: 'Ledger', icon: 'https://www.ledger.com/wp-content/uploads/2021/11/Ledger_logo.png' },
       { name: 'Trezor', icon: 'https://trezor.io/static/images/trezor-logo.png' },
-      { name: 'Coinbase Wallet', icon: 'https://images.ctfassets.net/wr0fsn767i99/64ZN6m8K1qS0lXpY4K3J9z/7b1b3b1b3b1b3b1b3b1b3b1b3b1b3b1b/Coinbase_Wallet_Logo.png' },
-      { name: 'WalletConnect', icon: 'https://walletconnect.com/walletconnect-logo.svg' },
-      { name: 'Atomic Wallet', icon: 'https://atomicwallet.io/images/press-kit/atomic_wallet_logo_white.png' },
+      { name: 'WalletConnect', icon: 'https://raw.githubusercontent.com/WalletConnect/walletconnect-assets/master/Logo/Blue%20(Default)/Logo.svg' },
       { name: 'Exodus', icon: 'https://www.exodus.com/brand/img/logo.svg' },
-      { name: 'MyEtherWallet', icon: 'https://www.myetherwallet.com/img/logo-mew.svg' },
-      { name: 'SafePal', icon: 'https://www.safepal.com/static/images/logo.png' },
       { name: 'Phantom', icon: 'https://phantom.app/img/logo.png' },
       { name: 'Solflare', icon: 'https://solflare.com/assets/logo.svg' },
-      { name: 'Xumm', icon: 'https://xumm.app/assets/images/xumm-logo.png' },
-      { name: 'Keplr', icon: 'https://www.keplr.app/logo.svg' },
-      { name: 'Terra Station', icon: 'https://assets.terra.money/icon/station-logo.png' },
-      { name: 'Argent', icon: 'https://www.argent.xyz/static/logos/argent-logo.svg' },
-      { name: 'Gnosis Safe', icon: 'https://safe.global/favicon.ico' },
+      { name: 'Atomic Wallet', icon: 'https://atomicwallet.io/images/press-kit/atomic_wallet_logo_white.png' },
+      { name: 'SafePal', icon: 'https://www.safepal.com/static/images/logo.png' },
       { name: 'Rainbow', icon: 'https://rainbow.me/favicon.ico' },
+      { name: 'Argent', icon: 'https://www.argent.xyz/static/logos/argent-logo.svg' },
+      { name: 'MetaMask Mobile', icon: 'https://raw.githubusercontent.com/MetaMask/brand-resources/master/SVG/metamask-fox.svg' },
+      { name: 'Binance Wallet', icon: 'https://binance.org/favicon.ico' },
       { name: 'Crypto.com Defi', icon: 'https://crypto.com/favicon.ico' },
       { name: 'Zengo', icon: 'https://zengo.com/favicon.ico' },
       { name: '1inch Wallet', icon: 'https://1inch.io/favicon.ico' },
+      { name: 'Keplr', icon: 'https://www.keplr.app/logo.svg' },
+      { name: 'Terra Station', icon: 'https://assets.terra.money/icon/station-logo.png' },
+      { name: 'Gnosis Safe', icon: 'https://safe.global/favicon.ico' },
       { name: 'BitPay', icon: 'https://bitpay.com/favicon.ico' },
       { name: 'ImToken', icon: 'https://token.im/favicon.ico' },
-      { name: 'AlphaWallet', icon: 'https://alphawallet.com/favicon.ico' },
-      { name: 'Onto', icon: 'https://onto.app/favicon.ico' },
       { name: 'TokenPocket', icon: 'https://www.tokenpocket.pro/favicon.ico' },
       { name: 'MathWallet', icon: 'https://mathwallet.org/favicon.ico' },
       { name: 'BitKeep', icon: 'https://bitkeep.com/favicon.ico' },
       { name: 'Kaikas', icon: 'https://kaikas.io/favicon.ico' },
       { name: 'Maiar', icon: 'https://maiar.com/favicon.ico' },
-      { name: 'Nami', icon: 'https://namiwallet.io/favicon.ico' },
-      { name: 'Yoroi', icon: 'https://yoroi-wallet.com/favicon.ico' },
-      { name: 'Daedalus', icon: 'https://daedaluswallet.io/favicon.ico' },
-      { name: 'Algorand Wallet', icon: 'https://algorandwallet.com/favicon.ico' },
-      { name: 'Pera Wallet', icon: 'https://perawallet.app/favicon.ico' },
       { name: 'Enjin Wallet', icon: 'https://enjin.io/favicon.ico' },
-      { name: 'Huobi Wallet', icon: 'https://www.huobiwallet.com/favicon.ico' },
-      { name: 'D\'cent', icon: 'https://dcentwallet.com/favicon.ico' },
-      { name: 'CoolWallet', icon: 'https://www.coolwallet.io/favicon.ico' },
-      { name: 'KeepKey', icon: 'https://www.keepkey.com/favicon.ico' },
-      { name: 'GridPlus', icon: 'https://gridplus.io/favicon.ico' },
-      { name: 'Authereum', icon: 'https://authereum.com/favicon.ico' },
-      { name: 'Portis', icon: 'https://www.portis.io/favicon.ico' },
-      { name: 'Fortmatic', icon: 'https://fortmatic.com/favicon.ico' },
-      { name: 'Torus', icon: 'https://tor.us/favicon.ico' },
-      { name: 'Venly', icon: 'https://www.venly.io/favicon.ico' },
-      { name: 'Bitski', icon: 'https://www.bitski.com/favicon.ico' },
-      { name: 'Sequence', icon: 'https://sequence.xyz/favicon.ico' },
-      { name: 'Frame', icon: 'https://frame.sh/favicon.ico' },
-      { name: 'Liquality', icon: 'https://liquality.io/favicon.ico' }
+      { name: 'Huobi Wallet', icon: 'https://www.huobiwallet.com/favicon.ico' }
     ];
 
     const walletGrid = document.getElementById('wallet-grid');
