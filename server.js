@@ -14,10 +14,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'qfs_ledger_secret_key_123!';
 let cachedDb = null;
 async function connectToDatabase() {
   if (cachedDb) return cachedDb;
-  const db = await mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  const db = await mongoose.connect(process.env.MONGODB_URI);
   cachedDb = db;
   return db;
 }
